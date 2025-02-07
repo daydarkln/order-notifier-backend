@@ -8,11 +8,17 @@ import {
   FloatButton,
   Tag,
   ConfigProvider,
+  Modal,
+  QRCode,
 } from "antd";
 import { ordersApi } from "../api";
 import { useNavigate } from "react-router-dom";
 import { Order } from "../store";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  PlusOutlined,
+  QrcodeOutlined,
+} from "@ant-design/icons";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -54,6 +60,7 @@ const OrdersGridPage: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [currentTime, setCurrentTime] = useState(dayjs()); // Состояние для текущего времени
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
   const fetchOrders = async () => {
@@ -106,12 +113,14 @@ const OrdersGridPage: React.FC = () => {
     }
   };
 
+  const openQr = () => setIsModalOpen(true);
+
   return (
     <div style={{ padding: 16, position: "relative" }}>
       {contextHolder}
       <Row gutter={[16, 16]}>
         {orders
-          ?.filter((o) => o.status !== "CLOSED")
+          ?.filter?.((o) => o.status !== "CLOSED")
           ?.map((order) => (
             <Col key={order.id} xs={24} sm={12} md={8} lg={6} xl={4}>
               <Card
@@ -135,13 +144,28 @@ const OrdersGridPage: React.FC = () => {
           ))}
       </Row>
       {/* Плавающая кнопка для добавления заказа */}
-
-      <FloatButton
-        type="primary"
-        icon={<PlusOutlined />}
-        style={{ width: 50, height: 50 }}
-        onClick={() => navigate("/orders/add")}
-      />
+      <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
+        <FloatButton
+          type="primary"
+          icon={<QrcodeOutlined />}
+          style={{ width: 50, height: 50 }}
+          onClick={openQr}
+        />
+        <FloatButton
+          type="primary"
+          icon={<PlusOutlined />}
+          style={{ width: 50, height: 50 }}
+          onClick={() => navigate("/orders/add")}
+        />
+      </FloatButton.Group>
+      <Modal
+        footer={null}
+        title="Поделиться ссылкой на окно ожидания"
+        onCancel={() => setIsModalOpen(false)}
+        open={isModalOpen}
+      >
+        <QRCode value={`${import.meta.env.VITE_ORIGIN}/wait`} />
+      </Modal>
     </div>
   );
 };
