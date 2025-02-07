@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -35,6 +35,7 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
       forceChangePassword: user.forceChangePassword,
+      userId: user.id,
     };
   }
 
@@ -45,18 +46,22 @@ export class AuthService {
    * @returns Обновленный пользователь.
    */
   async changePassword(userId: number, newPassword: string) {
-    const user = await this.usersService.findByUsername(userId.toString());
+    if (!userId) {
+      throw new UnauthorizedException('User ID not provided');
+    }
+    const user = await this.usersService.findById(Number(userId));
+    Logger.log(user);
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
 
     // Проверка, что новый пароль не совпадает с текущим
     const isSamePassword = await bcrypt.compare(newPassword, user.password);
-    if (isSamePassword) {
-      throw new UnauthorizedException(
-        'New password must be different from the current one',
-      );
-    }
+    // if (isSamePassword) {
+    //   throw new UnauthorizedException(
+    //     'New password must be different from the current one',
+    //   );
+    // }
 
     return this.usersService.updatePassword(user.id, newPassword);
   }

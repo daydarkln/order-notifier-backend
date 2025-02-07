@@ -9,14 +9,14 @@ import { useAuthStore } from "../store";
 const ChangePasswordPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const setMustChangePassword = useAuthStore(
-    (state) => state.setMustChangePassword
-  );
+  const { setMustChangePassword, userId } = useAuthStore();
 
   const onFinish = async (values: ChangePasswordRequest) => {
     setLoading(true);
     try {
-      await authApi.authControllerChangePassword({ data: values });
+      await authApi.authControllerChangePassword({
+        data: { ...values, userId },
+      });
       message.success("Пароль успешно изменён");
       // После смены пароля убираем флаг
       setMustChangePassword(false);

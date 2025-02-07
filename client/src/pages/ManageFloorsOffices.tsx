@@ -15,7 +15,7 @@ const AddFloorOffice: React.FC = () => {
   const fetchFloors = async () => {
     try {
       const response = await floorApi.floorControllerGetFloors();
-      setFloors(response.data);
+      setFloors(response.data ?? []);
     } catch (error) {
       message.error("Не удалось загрузить этажи");
     }

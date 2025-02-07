@@ -49,6 +49,15 @@ export class UsersService {
   }
 
   /**
+   * Находит пользователя по id.
+   * @param id id пользователя.
+   * @returns Пользователь или null, если не найден.
+   */
+  async findById(id: number) {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  /**
    * Обновляет пароль пользователя и сбрасывает флаг forceChangePassword.
    * @param userId ID пользователя.
    * @param newPassword Новый пароль.

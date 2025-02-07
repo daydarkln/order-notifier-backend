@@ -29,7 +29,10 @@ export class AuthController {
   // Эндпоинт смены пароля (требует авторизации)
   @UseGuards(JwtAuthGuard)
   @Post('change-password')
-  async changePassword(@Request() req, @Body() body: { newPassword: string }) {
-    return this.authService.changePassword(req.user.sub, body.newPassword);
+  async changePassword(
+    @Request() req,
+    @Body() body: { newPassword: string; userId: number },
+  ) {
+    return this.authService.changePassword(body.userId, body.newPassword);
   }
 }

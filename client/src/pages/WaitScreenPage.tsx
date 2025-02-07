@@ -13,7 +13,7 @@ const WaitScreenPage: React.FC = () => {
 
   // Подключение к WebSocket серверу
   useEffect(() => {
-    const socket = io("http://localhost:80");
+    const socket = io(import.meta.env.VITE_WEB_SOCKET_URL);
 
     // Обработка события обновления заказа
     socket.on("orderUpdated", (_updatedOrder: Order) => {
@@ -40,7 +40,7 @@ const WaitScreenPage: React.FC = () => {
   const fetchOrders = async () => {
     try {
       const response = await ordersApi.ordersControllerGetOrders();
-      setOrders(response.data);
+      setOrders(response.data ?? []);
     } catch (error) {
       message.error("Ошибка получения заказов");
     }
@@ -55,8 +55,8 @@ const WaitScreenPage: React.FC = () => {
       <h2>Ожидание</h2>
       <Row gutter={[16, 16]}>
         {orders
-          .filter((o) => o.status !== "CLOSED")
-          .map((order) => (
+          ?.filter((o) => o.status !== "CLOSED")
+          ?.map((order) => (
             <Col key={order.id} xs={24} sm={12} md={8} lg={6} xl={4}>
               <Card
                 hoverable

@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Row, Col, message, FloatButton, Tag } from "antd";
+import {
+  Card,
+  Button,
+  Row,
+  Col,
+  message,
+  FloatButton,
+  Tag,
+  ConfigProvider,
+} from "antd";
 import { ordersApi } from "../api";
 import { useNavigate } from "react-router-dom";
 import { Order } from "../store";
@@ -50,7 +59,7 @@ const OrdersGridPage: React.FC = () => {
   const fetchOrders = async () => {
     try {
       const response = await ordersApi.ordersControllerGetOrders();
-      setOrders(response.data);
+      setOrders(response.data ?? []);
     } catch (error) {
       messageApi.error("Ошибка получения заказов");
     }
@@ -102,8 +111,8 @@ const OrdersGridPage: React.FC = () => {
       {contextHolder}
       <Row gutter={[16, 16]}>
         {orders
-          .filter((o) => o.status !== "CLOSED")
-          .map((order) => (
+          ?.filter((o) => o.status !== "CLOSED")
+          ?.map((order) => (
             <Col key={order.id} xs={24} sm={12} md={8} lg={6} xl={4}>
               <Card
                 hoverable
@@ -126,6 +135,7 @@ const OrdersGridPage: React.FC = () => {
           ))}
       </Row>
       {/* Плавающая кнопка для добавления заказа */}
+
       <FloatButton
         type="primary"
         icon={<PlusOutlined />}

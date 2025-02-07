@@ -4,7 +4,7 @@ import { AuthApi, FloorsApi, OrdersApi } from "./generated-api/api"; // путь
 
 // Настройка базового URL – изменить под ваш сервер
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: import.meta.env.VITE_BASE_URL,
 });
 
 // Функция для получения токена из localStorage
@@ -26,10 +26,10 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
-      // Если статус ответа 401 (Unauthorized), перенаправляем на /login
-      window.location.href = "/login";
-    }
+    // if (error.response && error.response.status === 401) {
+    //   // Если статус ответа 401 (Unauthorized), перенаправляем на /login
+    //   window.location.href = "/login";
+    // }
     return Promise.reject(error);
   }
 );

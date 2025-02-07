@@ -8,10 +8,8 @@ import { LoginRequest, LoginResponse } from "../types";
 
 const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const setToken = useAuthStore((state) => state.setToken);
-  const setMustChangePassword = useAuthStore(
-    (state) => state.setMustChangePassword
-  );
+  const { setUserId, setToken, setMustChangePassword } = useAuthStore();
+
   const navigate = useNavigate();
 
   const onFinish = async (values: LoginRequest) => {
@@ -24,6 +22,7 @@ const LoginPage: React.FC = () => {
       // Предполагается, что response.data содержит { token, mustChangePassword }
       const data: LoginResponse = response.data as unknown as LoginResponse;
       setToken(data.access_token);
+      setUserId(data.userId);
       setMustChangePassword(data.forceChangePassword);
       // Если требуется смена пароля – переходим на ChangePasswordPage
       if (data.forceChangePassword) {

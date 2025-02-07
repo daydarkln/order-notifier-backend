@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 // src/store.ts
 export interface AuthState {
   token: string | null;
+  userId?: number;
   mustChangePassword: boolean;
   setToken: (token: string | null) => void;
   setMustChangePassword: (flag: boolean) => void;
@@ -13,8 +14,10 @@ export const useAuthStore = create(
   persist<AuthState>(
     (set) => ({
       token: null,
+      userId: undefined,
       mustChangePassword: false,
       setToken: (token: string | null) => set({ token }),
+      setUserId: (userId: number) => set({ userId }),
       setMustChangePassword: (flag: boolean) =>
         set({ mustChangePassword: flag }),
     }),
