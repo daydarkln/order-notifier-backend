@@ -40,7 +40,7 @@ const WaitScreenPage: React.FC = () => {
   const fetchOrders = async () => {
     try {
       const response = await ordersApi.ordersControllerGetOrders();
-      setOrders(response.data ?? []);
+      setOrders(response.data ?? ([] as any));
     } catch (error) {
       message.error("Ошибка получения заказов");
     }

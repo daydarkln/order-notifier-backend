@@ -58,7 +58,7 @@ export const getTimeElapsed = (createdAt: string) => {
 
 const OrdersGridPage: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [currentTime, setCurrentTime] = useState(dayjs()); // Состояние для текущего времени
+  const [, setCurrentTime] = useState(dayjs()); // Состояние для текущего времени
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
@@ -66,7 +66,7 @@ const OrdersGridPage: React.FC = () => {
   const fetchOrders = async () => {
     try {
       const response = await ordersApi.ordersControllerGetOrders();
-      setOrders(response.data ?? []);
+      setOrders(response.data ?? ([] as any));
     } catch (error) {
       messageApi.error("Ошибка получения заказов");
     }

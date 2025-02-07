@@ -1,5 +1,5 @@
 # Используем базовый образ Node.js
-FROM node:18-alpine AS build
+FROM node:20-alpine
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -16,17 +16,8 @@ COPY . .
 # Собираем приложение
 RUN yarn build
 
-# Используем легкий образ Nginx для статики
-FROM nginx:alpine
-
-# Копируем собранные файлы из стадии сборки
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Копируем конфиг Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
 # Открываем порт 80
-EXPOSE 80
+EXPOSE 5173
 
 # Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,5 +1,5 @@
 # Используем базовый образ Node.js
-FROM node:18-alpine AS build
+FROM node:20-alpine
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -15,12 +15,6 @@ COPY . .
 
 # Собираем приложение
 RUN yarn build
-
-# Используем легкий образ Node.js для продакшена
-FROM node:18-alpine
-
-# Устанавливаем рабочую директорию
-WORKDIR /app
 
 # Копируем только необходимые файлы
 COPY --from=build /app/node_modules ./node_modules

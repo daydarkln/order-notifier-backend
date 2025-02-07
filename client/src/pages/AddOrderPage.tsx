@@ -17,7 +17,7 @@ const AddOrderPage: React.FC = () => {
       try {
         const response = await floorApi.floorControllerGetFloors();
         // Предполагается, что response.data – массив этажей
-        setFloors(response.data ?? []);
+        setFloors((response.data ?? []) as Floor[]);
       } catch (error) {
         message.error("Ошибка получения этажей");
       }

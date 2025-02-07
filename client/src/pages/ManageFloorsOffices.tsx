@@ -197,7 +197,7 @@ const AddFloorOffice: React.FC = () => {
               size="small"
               bordered
               dataSource={f.offices}
-              renderItem={(item) => (
+              renderItem={(item: any) => (
                 <List.Item
                   actions={[
                     <Button type="link" onClick={() => handleEditOffice(item)}>

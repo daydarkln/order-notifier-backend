@@ -8,6 +8,7 @@ export interface AuthState {
   mustChangePassword: boolean;
   setToken: (token: string | null) => void;
   setMustChangePassword: (flag: boolean) => void;
+  setUserId: (userId: number) => void;
 }
 
 export const useAuthStore = create(
