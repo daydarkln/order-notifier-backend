@@ -31,9 +31,6 @@
       "continue": true
     },
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "/(.*)",
       "dest": "/client/index.html"
     }
