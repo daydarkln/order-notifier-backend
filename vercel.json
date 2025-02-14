@@ -5,37 +5,30 @@
       "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "dist",
+        "cleanDistDir": true
       }
     },
     {
-      "src": "/server/dist/main.js",
+      "src": "server/src/main.ts",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["server/dist/**"]
+        "include": ["dist/**"]
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/server/dist/main.js",
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
-      }
+      "dest": "/server/$1",
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]
     },
     {
       "src": "/(.*)",
-      "dest": "/client/$1",
-      "continue": true
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/client/index.html"
+      "dest": "/client/$1"
     }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/client" }
   ]
 }

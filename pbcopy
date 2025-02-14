@@ -1,0 +1,39 @@
+.
+├── client
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── dist
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── node_modules
+│   ├── openapitools.json
+│   ├── package.json
+│   ├── public
+│   ├── src
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   ├── vite.config.ts
+│   └── yarn.lock
+├── docker-compose.yml
+├── openapitools.json
+├── pbcopy
+├── server
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── dist
+│   ├── eslint.config.mjs
+│   ├── nest-cli.json
+│   ├── node_modules
+│   ├── openapi.json
+│   ├── package.json
+│   ├── prisma
+│   ├── src
+│   ├── test
+│   ├── tsconfig.build.json
+│   ├── tsconfig.json
+│   ├── yarn-error.log
+│   └── yarn.lock
+└── vercel.json
+
+11 directories, 25 files
