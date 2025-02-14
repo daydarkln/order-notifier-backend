@@ -17,6 +17,7 @@ import { useAuthStore } from "./store";
 import { ConfigProvider } from "antd";
 
 const App: React.FC = () => {
+  console.log(import.meta.env.VITE_ORIGIN);
   const { token } = useAuthStore();
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "#252525" } }}>
