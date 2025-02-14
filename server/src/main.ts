@@ -29,8 +29,10 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  // Сохраняем OpenAPI спецификацию в JSON файл
-  writeFileSync('./openapi.json', JSON.stringify(document, null, 2));
+// Для генерации файла только в development режиме
+  if (process.env.NODE_ENV !== 'production') {
+    writeFileSync('./openapi.json', JSON.stringify(document));
+  }
 
   SwaggerModule.setup('api', app, document);
 
