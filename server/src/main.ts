@@ -14,11 +14,11 @@ async function bootstrap() {
       credentials: true
     },
   });
-  app.use(morgan('dev')); // Для development
-  app.use(morgan('combined')); // Для production
-
-  // Или кастомный формат
-  app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+  // app.use(morgan('dev')); // Для development
+  // app.use(morgan('combined')); // Для production
+  //
+  // // Или кастомный формат
+  // app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
   const config = new DocumentBuilder()
     .setTitle('Shawarma Order Notification System')
