@@ -8,21 +8,9 @@
         "distDir": "dist",
         "cleanDistDir": true
       }
-    },
-    {
-      "src": "server/src/main.ts",
-      "use": "@vercel/node",
-      "config": {
-        "include": ["dist/**"]
-      }
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server/$1",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]
-    },
     {
       "src": "/(.*)",
       "dest": "/client/$1"
