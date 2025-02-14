@@ -9,7 +9,7 @@
       }
     },
     {
-      "src": "server/src/main.ts",
+      "src": "/server/dist/main.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": ["server/dist/**"]
